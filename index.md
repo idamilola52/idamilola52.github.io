@@ -29,7 +29,7 @@ Finding 1: Exposed Sensitive Information via robots.txt
 * Description: My initial step in any web application assessment is to check for standard file artifacts. I found that the robots.txt file was openly accessible, and it contained what appeared to be hidden instructions meant for search engine crawlers.
 
 * Steps to Exploit (Proof of Concept):
-	 1\. I manually navigated to the standard path: [http://target.ine.local/robots.txt](http://target.ine.local/robots.txt).  
+	 1\. I manually navigated to the standard path: http://target.ine.local/robots.txt  
      2\. The file was immediately accessible and revealed the first flag hidden in a Disallow entry.  
                  
 Flag Captured: FLAG1{8ae7dd02add45adaafc4d01c004d473}
@@ -53,7 +53,7 @@ Flag Captured: FLAG1{8ae7dd02add45adaafc4d01c004d473}
    * With the version confirmed, I performed some final digging by viewing the full page source again and specifically searched for the flag using common keywords like `FLAG` or `FL@G` based on the lab notes.  
    * Running Nmap gave me the flag much easily 
      
- Flag Captured: FLAG1{8ae7dd02add45adaafc4d01c004d473}   
+ Flag Captured: FL@G2{7aeead80d11b4e08ac7148eca21a1e46}   
 
  **Finding 3: Exposed Directories via Brute Forcing**
 
@@ -62,12 +62,12 @@ Flag Captured: FLAG1{8ae7dd02add45adaafc4d01c004d473}
 * **Steps to Exploit (Proof of Concept):**  
 	1. I used **dirsearch** with its default wordlist against the target:
 
-      *dirsearch \-u [http://target.ine.local](http://target.ine.local)*
+      dirsearch \-u [http://target.ine.local](http://target.ine.local)
 
 	2. The tool successfully identified several common WordPress directories. The discovery of the /wp-content/uploads directory provided the location-based hint needed to secure the third flag.
 
 
-Flag Captured: FLAG3{20dafabeb8cf4853970377647e5d0d5b}**
+Flag Captured: FLAG3{20dafabeb8cf4853970377647e5d0d5b}
 
 **Finding 4: Overlooked Backup Configuration File**
 
@@ -77,11 +77,11 @@ Flag Captured: FLAG3{20dafabeb8cf4853970377647e5d0d5b}**
 	1. The output from dirsearch indicated the presence of the file */wp-config.bak*.  
 	2. I used Curl to quickly fetch the content of this file directly:
 
-			 *curl http://target.ine.local/wp-config.bak*
+			 curl http://target.ine.local/wp-config.bak
     
 	4. The file contents were dumped, revealing the sensitive configuration details and the fourth flag.
 
-Flag Captured: FLAG4{c026ef0bd6274ec493c821f2447e5419}**
+Flag Captured: FLAG4{c026ef0bd6274ec493c821f2447e5419}
 
 #### **Finding 5: Sensitive Information Exposed in XML-RPC Configuration Backup**
 
@@ -89,16 +89,16 @@ Flag Captured: FLAG4{c026ef0bd6274ec493c821f2447e5419}**
 * **Steps to Exploit (Proof of Concept):**  
 	1\. I used **HTTrack** to download a complete, local copy of the target website:
   
-	               *httrack [http://target.ine.local](http://target.ine.local)*
+	               *httrack http://target.ine.local
   
 	2\.   After the download completed, I began manually inspecting the downloaded files and noticed a file named xmlrpc0db0.php.   
 	3\.    I viewed the content of this file locally using a text editor (`nano`):
   
-	                *nano xmlrpc0db0.php*
+	                nano xmlrpc0db0.php
   
 	4\. The file contained the final flag, which was hidden within the XML-RPC configuration data.
 
-Flag Captured:** **FLAG5{2857ef1a83054ef397fb885e9aed3a1b}**
+Flag Captured: FLAG5{2857ef1a83054ef397fb885e9aed3a1b}
 
 ### **3\. Conclusion**
 
