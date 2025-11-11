@@ -1,0 +1,10 @@
+# Basic Site Settings
+title: CTF Walkthrough Portfolio
+description: A collection of security assessment writeups and CTF solutions.
+baseurl: "" # The subpath of your site, e.g. /blog
+url: "https://idamilola52.github.io" # The base hostname & protocol for your site
+
+# Theme Settings
+remote_theme: pages-themes/minimal
+plugins:
+  - jekyll-remote-theme
