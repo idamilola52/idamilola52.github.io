@@ -1,3 +1,6 @@
+---
+layout: default
+---
 
 # Assessment Methodologies: Footprinting and Scanning CTF 1
 
