@@ -1,7 +1,3 @@
----
-layout: default
-title: eJPT Footprinting and Scanning CTF 1 
----
 
 # Assessment Methodologies: Footprinting and Scanning CTF 1
 
