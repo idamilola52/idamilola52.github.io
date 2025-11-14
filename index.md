@@ -1,5 +1,11 @@
-## **eJPT Assessment Methodologies: Information Gathering CTF 1 Walkthrough**
+# CTF Walkthrough Portfolio
 
+## Available Assessments
+
+* [eJPT Solution Walkthrough](index.md)
+* **Assessment Methodologies: Footprinting and Scanning CTF 1* (walkthroughs/footprinting-scanning-ctf1.md)
+
+## **eJPT Assessment Methodologies: Information Gathering CTF 1 Walkthrough**
 **1\. Introduction and Scope**
 
 **1.1 Assessment Overview
