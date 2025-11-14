@@ -1,6 +1,2 @@
-# CTF Walkthrough Portfolio
-
-## Available Assessments
-
-* **Assessment Methodologies: Information Gathering CTF 1*
-* **Assessment Methodologies: Footprinting and Scanning CTF 1* 
+eJPT-CTF1-Info-Gathering.md
+eJPT-Footprinting-and-Scanning-CTF1.md
