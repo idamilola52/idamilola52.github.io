@@ -36,7 +36,7 @@ This lab is designed to test knowledge and skills in performing reconnaissance a
 Before starting the active scan, I ensured the target was up and accessible using a simple host discovery method.
 
 Bash
-ping target.ine.local
+`ping target.ine.local`
 
 Port Scanning and Service Enumeration
 The next step was to run a comprehensive port scan to identify open ports and services running on the target machine.
@@ -48,7 +48,7 @@ A more detailed scan was then performed to identify service versions, operating 
 
 Bash
 
-nmap target.ine.local -p- -A
+`nmap target.ine.local -p- -A`
 
 Flag 1: Server Header Enumeration
 By analyzing the detailed Nmap scan result, the HTTP server response header was found to contain the first flag.
@@ -80,7 +80,8 @@ Command to log in:
 
 Bash
 
-mysql -u db_admin -h target.ine.local -p
+`mysql -u db_admin -h target.ine.local -p`
+
 # [password obtained from creds.txt]
 Once logged in, I enumerated the databases and tables to find the final flag.
 
