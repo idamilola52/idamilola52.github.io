@@ -1,7 +1,3 @@
-CTF Walkthrough Portfolio
-
-Welcome to my portfolio of penetration testing and security assessment write-ups. This page provides links to detailed solutions for various Capture The Flag (CTF) challenges and eJPT labs.
-
 Available Assessments
 
 eJPT Solution: Information Gathering CTF 1
