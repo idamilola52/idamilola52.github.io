@@ -1,7 +1,3 @@
----
-layout: default
-title: eJPT Information Gathering CTF 1
----
 
 ## **eJPT Assessment Methodologies: Information Gathering CTF 1 Walkthrough**
 **1\. Introduction and Scope**
