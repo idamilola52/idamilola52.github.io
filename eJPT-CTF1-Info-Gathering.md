@@ -1,4 +1,6 @@
-
+--- 
+layout: default 
+---
 ## **eJPT Assessment Methodologies: Information Gathering CTF 1 Walkthrough**
 **1\. Introduction and Scope**
 
