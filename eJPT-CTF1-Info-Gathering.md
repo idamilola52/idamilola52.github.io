@@ -1,6 +1,6 @@
 ---
 layout: default
-title: eJPT Footprinting and Scanning CTF 1 Walkthrough
+title: eJPT Information Gathering CTF 1
 ---
 
 ## **eJPT Assessment Methodologies: Information Gathering CTF 1 Walkthrough**
