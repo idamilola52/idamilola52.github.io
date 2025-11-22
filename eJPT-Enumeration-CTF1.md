@@ -35,11 +35,11 @@ A Linux machine is accessible at `target.ine.local`. Identify the services runni
 
 1. Open the lab link to access the Kali machine.  
      
-   ![access the kali machine][image1](/assets/img1)  
+   ![access the kali machine][image1](/assets/img1.png)  
      
 2. Check if the target is up   
      
-   ![][image2](/assets/img2)  
+   ![][image2](/assets/img2.png)  
 
 3. Upon scanning the target, the following open ports were identified: SMB/Samba, SSH, and FTP.  
      
