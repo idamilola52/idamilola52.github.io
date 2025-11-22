@@ -7,107 +7,119 @@ tags: [samba, smb, ftp, ssh, nmap, metasploit, hydra]
 description: "A step-by-step write-up for the CTF1 challenge focusing on network and service enumeration techniques."
 ---
 
-# Assessment Methodologies: Enumeration CTF1
+# Assessment Methodologies : Enumeration CTF1
 
-## 💡 Overview
+## Overview 
 
-This lab focused on enumeration techniques to identify and analyze running services on a target Linux machine. The goal was to explore and interact with the machine's services to uncover and capture hidden flags. Participants applied knowledge of network and system enumeration to identify misconfigurations, weak credentials, and potential security vulnerabilities.
+This lab focuses on enumeration techniques to identify and analyze running services on a target Linux machine. The goal is to explore and interact with the machine's services to uncover and capture hidden flags. Participants will apply their knowledge of network and system enumeration to identify misconfigurations, weak credentials, and potential security vulnerabilities.
 
----
+## Lab Environment 
 
-## 💻 Lab Environment
+A Linux machine is accessible at `target.ine.local`. Identify the services running on the machine and capture the flags. The flag is an md5 hash format.
 
-A Linux machine is accessible at `target.ine.local`. The objective was to identify the services running on the machine and capture the flags, which are in **MD5 hash format**.
+**Flag 1:** There is a samba share that allows anonymous access. Wonder what's in there\!  
+**Flag 2:** One of the samba users has a bad password. Their private share with the same name as their username is at risk\!  
+**Flag 3:** Follow the hint given in the previous flag to uncover this one.  
+**Flag 4:** This is a warning meant to deter unauthorized users from logging in.
 
-* **Flag 1:** There is a Samba share that allows anonymous access.
-* **Flag 2:** One of the Samba users has a bad password. Their private share with the same name as their username is at risk!
-* **Flag 3:** Follow the hint given in the previous flag to uncover this one.
-* **Flag 4:** This is a warning meant to deter unauthorized users from logging in.
+*Note: The wordlists located in the following directory will be useful: /root/Desktop/wordlists*
 
-> **Note:** The wordlists located in the following directory will be useful: `/root/Desktop/wordlists`
+## Tools
 
-### Tools Used
+* Nmap  
+* Metasploit  
+* Hydra  
+* enum4linux  
+* smbclient  
+* Smbmap
 
-* **Nmap**
-* **Metasploit**
-* **Hydra**
-* **enum4linux**
-* **smbclient**
-* **Smbmap**
+## Solution
 
----
+1. Open the lab link to access the Kali machine.  
+     
+   ![access the kali machine][image1](../assets/img1)  
+     
+2. Check if the target is up   
+     
+   ![][image2](../assets/img2)  
 
-## ✅ Solution
-
-### 1. Initial Access and Service Discovery
-
-1.  Open the lab link to access the Kali machine.
-    
-
-2.  Check if the target is up.
-    `ping -c 4 target.ine.local`
-
-3.  Upon scanning the target using **Nmap**, the following open ports and services were identified: *SMB/Samba**, **SSH**, and **FTP**.
+3. Upon scanning the target, the following open ports were identified: SMB/Samba, SSH, and FTP.  
+     
+   ![][image3](../assets/img3)   
+   ![][image4](../assets/img4)  
+     
+4. TThe next step involves performing Server Message Block (SMB) enumeration, utilizing a suitable tool such as `enum4linux`.  
+     
+- The initial step was to enumerate the users and the operating system. This successfully yielded three users: josh, nancy, and bob.
 
 
-### 2. Capturing Flag 1: Anonymous SMB Share
+  ![][image5](../assets/img5)  
 
-The next step involved performing Server Message Block (SMB) enumeration, utilizing **enum4linux**.
 
-* The initial step was to enumerate the users and the operating system. This successfully yielded three users: **josh**, **nancy**, and **bob**.
-    
+- The next step involved enumerating the available shares, which led to the discovery of the `print$` and `IPC$` shares.
 
-* The next step involved enumerating the available shares, which led to the discovery of the `print$` and `IPC$` shares.
-    
+  ![][image6](../assets/img6)  
 
-Since the `IPC$` share often permits the **NULL Session**, anonymous login is possible. The `smbclient` tool was used to brute-force share names on the target system to discover any that permit anonymous access.
 
-* A script was executed to loop through a `share.txt` wordlist to identify anonymous shares.
-    
-    
+5. Since the IPC$ is often referred to as the NULL Session, anonymous login is possible. The `smbclient` tool can be used to bruteforce share names on the target system to discover any that permit anonymous access. The following script was executed to loop through the `share.txt` wordlist for this purpose.  
+     
+   ![][image7](../assets/img7)   
+   ![][image8](../assets/img8)   
+     
+   A brute-force attack successfully revealed that the "pubfiles" share is an anonymous working share. Accessing this share directly was the next logical step, which     yielded the flag: `FLAG1{5090e686ad1c4cadb49ed0ada4f94ad5}`.  
+     
+   ![][image9](../assets/img9)    
+     
+6. The objective is to obtain flag2. We were informed that one of the Samba users has a weak password, and their private share is named identically to their username. The next logical step is to attempt to determine the potential passwords for the users. I plan to use the Metasploit framework to brute-force the passwords for the users: bob, nancy, and josh.  
+     
+   ![][image10](../assets/img10)    
+     
+   The auxiliary module `auxiliary/scanner/smb/smb_login` will be utilized.  
+     
+   ![][image11](../assets/img11)    
+     
+   ![][image12](../assets/img12)  
+     
+   * I successfully enumerated the password for the user 'josh' as 'purple'.  
+   * However, attempts to obtain passwords for 'bob' and 'nancy' using the same process were unsuccessful.  
+   * Next, I used `smbclient` with josh's newly acquired password to connect directly to their private share.  
+   * The process resulted in obtaining Flag2: `f844bde5181243df8ff87f96d3405963`.
 
-* The brute-force attack successfully revealed that the **"pubfiles"** share is an anonymous working share. Accessing this share directly was the next logical step, which yielded **Flag 1**:
-    `FLAG1{5090e686ad1c4cadb49ed0ada4f94ad5}`.
-    
+   
 
-### 3. Capturing Flag 2: Weak SMB User Password
+   ![][image13](../assets/img13)  
 
-The objective for Flag 2 was to find a Samba user with a weak password, as their private share is named identically to their username. The next step was to brute-force the user passwords.
 
-* The **Metasploit framework** and the auxiliary module **`auxiliary/scanner/smb/smb_login`** were utilized against the enumerated users: **bob**, **nancy**, and **josh**.
-    
-    
 
-* The process successfully enumerated the password for the user **'josh'** as **'purple'**. Attempts to obtain passwords for 'bob' and 'nancy' were unsuccessful.
+7. The third flag was obtained using a hint from the second flag's result, which pointed to a running FTP service and suggested checking the banner for additional clues.  
+     
+-  To begin the enumeration, I performed a full port scan using `nmap`. This scan revealed that an FTP server is operational on port 5554\.
 
-* The user `smbclient` was then used with josh's newly acquired credentials (`josh:purple`) to connect directly to their private share (`//target.ine.local/josh`).
 
-* Accessing the private share resulted in obtaining **Flag 2**:
-    `FLAG2{f844bde5181243df8ff87f96d3405963}`.
-    
+  ![][image14](../assets/img14)  
 
-### 4. Capturing Flag 3: FTP Service Vulnerability
 
-Flag 3 was obtained using a hint from the second flag's result, which pointed to a running **FTP service** and suggested checking the banner for additional clues.
+- The File Transfer Protocol (FTP) service banner displayed a reminder to users—specifically Ashley, Alice, and Amanda—to immediately change their weak passwords. Since I do not possess their current passwords, I will need to use a tool, such as Hydra, to brute-force the user passwords.
 
-* A full port scan using **Nmap** revealed that an FTP server is operational on port **5554**.
-    
 
-* Connecting to the File Transfer Protocol (FTP) service revealed a banner displaying a reminder to users—specifically **Ashley**, **Alice**, and **Amanda**—to immediately change their weak passwords. Since the current passwords were unknown, **Hydra** was used to brute-force the user passwords.
-    
+  ![][image15](../assets/img15)  
 
-* **Hydra** was successfully used to obtain the password for **'alice'**, which is **"pretty"**. Attempts to find the passwords for 'ashley' and 'amanda' were unsuccessful.
-    
 
-* After logging into the FTP service with the newly acquired credentials (`alice:pretty`), **Flag 3** was successfully retrieved:
-    `FLAG3{0f1972b9556d4aa286383d181347dd1d}`.
-    
+- I successfully obtained the password for 'alice', which is "pretty." However, my attempts to find the passwords for 'ashley' and 'amanda' were unsuccessful.
 
-### 5. Capturing Flag 4: SSH Service Warning
 
-Flag 4 was obtained by exploiting another discovered service on the target machine: **SSH**.
+  ![][image16](../assets/img16)  
 
-* By simply connecting to the **SSH service** on the target machine using the `ssh` command, a pre-login warning banner (often called the **Message of the Day** or **MOTD**) was displayed before any credentials were entered. This warning banner contained the final flag.
 
-* Successfully retrieved **Flag 4**:
-    `FLAG4{cdee042a27d54e5fb573ff15e2ee6c34}`.
+- After logging into the FTP service with the newly acquired credentials, we successfully obtained flag3, which is `FLAG3{0f1972b9556d4aa286383d181347dd1d}`.
+
+
+  ![][image17](../assets/img17)  
+
+
+  
+
+8. Flag 4 was obtained by exploiting another discovered service on the target machine: SSH. By utilizing the SSH service, I successfully retrieved the flag, which is **FLAG4{cdee042a27d54e5fb573ff15e2ee6c34}**.  
+   
+
+   ![][image18](../assets/img18)  
