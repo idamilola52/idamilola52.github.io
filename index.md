@@ -5,3 +5,6 @@ eJPT Solution: Information Gathering CTF 1
 
 eJPT Solution: Footprinting and Scanning CTF 1
 ([View Write-up]({{ site.baseurl }}/eJPT-Footprinting-and-Scanning-CTF1))
+
+eJPT Solution: Enumeration CTF 1
+([View Write-up]({{ site.baseurl }}/eJPT-Enumeration-CTF1))
