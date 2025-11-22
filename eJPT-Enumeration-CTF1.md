@@ -1,13 +1,11 @@
 ---
 layout: post
-title: "Assessment Methodologies: Enumeration CTF1 Write-up"
+title: "Assessment Methodologies: Enumeration CTF1"
 date: 2025-11-22 14:00:00 -0500 # Adjust the date/time as needed for publishing
 categories: [ctf, enumeration, writeup]
 tags: [samba, smb, ftp, ssh, nmap, metasploit, hydra]
 description: "A step-by-step write-up for the CTF1 challenge focusing on network and service enumeration techniques."
 ---
-
-# Assessment Methodologies : Enumeration CTF1
 
 ## Overview 
 
@@ -37,89 +35,74 @@ A Linux machine is accessible at `target.ine.local`. Identify the services runni
 
 1. Open the lab link to access the Kali machine.  
      
-   ![access the kali machine][image1](../assets/img1)  
+   ![access the kali machine][image1](/assets/img1)  
      
 2. Check if the target is up   
      
-   ![][image2](../assets/img2)  
+   ![][image2](/assets/img2)  
 
 3. Upon scanning the target, the following open ports were identified: SMB/Samba, SSH, and FTP.  
      
-   ![][image3](../assets/img3)   
-   ![][image4](../assets/img4)  
+   ![][image3](/assets/img3)   
+   ![][image4](/assets/img4)  
      
 4. TThe next step involves performing Server Message Block (SMB) enumeration, utilizing a suitable tool such as `enum4linux`.  
      
 - The initial step was to enumerate the users and the operating system. This successfully yielded three users: josh, nancy, and bob.
 
 
-  ![][image5](../assets/img5)  
+  ![][image5](/assets/img5)  
 
 
 - The next step involved enumerating the available shares, which led to the discovery of the `print$` and `IPC$` shares.
 
-  ![][image6](../assets/img6)  
+  ![][image6](/assets/img6)  
 
 
 5. Since the IPC$ is often referred to as the NULL Session, anonymous login is possible. The `smbclient` tool can be used to bruteforce share names on the target system to discover any that permit anonymous access. The following script was executed to loop through the `share.txt` wordlist for this purpose.  
      
-   ![][image7](../assets/img7)   
-   ![][image8](../assets/img8)   
+   ![][image7](/assets/img7)   
+   ![][image8](/assets/img8)   
      
    A brute-force attack successfully revealed that the "pubfiles" share is an anonymous working share. Accessing this share directly was the next logical step, which     yielded the flag: `FLAG1{5090e686ad1c4cadb49ed0ada4f94ad5}`.  
      
-   ![][image9](../assets/img9)    
+   ![][image9](/assets/img9)    
      
 6. The objective is to obtain flag2. We were informed that one of the Samba users has a weak password, and their private share is named identically to their username. The next logical step is to attempt to determine the potential passwords for the users. I plan to use the Metasploit framework to brute-force the passwords for the users: bob, nancy, and josh.  
      
-   ![][image10](../assets/img10)    
+   ![][image10](/assets/img10)    
      
    The auxiliary module `auxiliary/scanner/smb/smb_login` will be utilized.  
      
-   ![][image11](../assets/img11)    
+   ![][image11](/assets/img11)    
      
-   ![][image12](../assets/img12)  
+   ![][image12](/assets/img12)  
      
    * I successfully enumerated the password for the user 'josh' as 'purple'.  
    * However, attempts to obtain passwords for 'bob' and 'nancy' using the same process were unsuccessful.  
    * Next, I used `smbclient` with josh's newly acquired password to connect directly to their private share.  
    * The process resulted in obtaining Flag2: `f844bde5181243df8ff87f96d3405963`.
 
-   
-
-   ![][image13](../assets/img13)  
-
-
+   ![][image13](/assets/img13)  
 
 7. The third flag was obtained using a hint from the second flag's result, which pointed to a running FTP service and suggested checking the banner for additional clues.  
      
 -  To begin the enumeration, I performed a full port scan using `nmap`. This scan revealed that an FTP server is operational on port 5554\.
 
-
-  ![][image14](../assets/img14)  
-
+  ![][image14](/assets/img14)  
 
 - The File Transfer Protocol (FTP) service banner displayed a reminder to users—specifically Ashley, Alice, and Amanda—to immediately change their weak passwords. Since I do not possess their current passwords, I will need to use a tool, such as Hydra, to brute-force the user passwords.
 
-
-  ![][image15](../assets/img15)  
-
+  ![][image15](/assets/img15)  
 
 - I successfully obtained the password for 'alice', which is "pretty." However, my attempts to find the passwords for 'ashley' and 'amanda' were unsuccessful.
 
-
-  ![][image16](../assets/img16)  
-
+  ![][image16](/assets/img16)  
 
 - After logging into the FTP service with the newly acquired credentials, we successfully obtained flag3, which is `FLAG3{0f1972b9556d4aa286383d181347dd1d}`.
 
-
-  ![][image17](../assets/img17)  
-
-
+  ![][image17](/assets/img17)  
   
-
-8. Flag 4 was obtained by exploiting another discovered service on the target machine: SSH. By utilizing the SSH service, I successfully retrieved the flag, which is **FLAG4{cdee042a27d54e5fb573ff15e2ee6c34}**.  
+8. Flag 4 was obtained by exploiting another discovered service on the target machine: SSH. By utilizing the SSH service, I successfully retrieved the flag, which is  `FLAG4{cdee042a27d54e5fb573ff15e2ee6c34}`.  
    
-
-   ![][image18](../assets/img18)  
+   ![][image18](/assets/img18)  
