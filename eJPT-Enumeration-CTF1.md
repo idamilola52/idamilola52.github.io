@@ -41,7 +41,7 @@ A Linux machine is accessible at `target.ine.local`. Identify the services runni
    ![Nmap -sV target.ine.local][image3](/assets/img3.png)   
    ![Nmap -sV target.ine.local][image4](/assets/img4.png)  
      
-4. TThe next step involves performing Server Message Block (SMB) enumeration, utilizing a suitable tool such as `enum4linux`.  
+4. The next step involves performing Server Message Block (SMB) enumeration, utilizing a suitable tool such as `enum4linux`.  
      
 - The initial step was to enumerate the users and the operating system. This successfully yielded three users: josh, nancy, and bob.
   
