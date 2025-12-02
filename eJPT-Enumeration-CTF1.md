@@ -1,10 +1,5 @@
 ---
 layout: default
-title: "Assessment Methodologies: Enumeration CTF1"
-date: 2025-11-22 14:00:00 -0500 # Adjust the date/time as needed for publishing
-categories: [ctf, enumeration, writeup]
-tags: [samba, smb, ftp, ssh, nmap, metasploit, hydra]
-description: "A step-by-step write-up for the CTF1 challenge focusing on network and service enumeration techniques."
 ---
 
 ## Overview 
