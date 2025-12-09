@@ -11,3 +11,6 @@ eJPT Solution: Enumeration CTF 1
 
 eJPT Solution: Vulnerability Assessment CTF 1
 ([View Write-up]({{ site.baseurl }}/eJPT-Vulnerability-Assessment-CTF1))
+
+eJPT Solution: System-Host Based Attacks CTF 1
+([View Write-up]({{ site.baseurl }}/System-Host-Based-Attacks-CTF1.md1))
