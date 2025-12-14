@@ -32,12 +32,13 @@ Flag 1:
 - I initially employed an Nmap script for the attack: `nmap -sV --script=http-shellshock --script-args "http-shellshock.uri=/browser.cgi" target1.ine.local`.
 
 
-![][image1]
+![host_discovery, nmap_scan][image1](/linux-assets/img1.png) 
 
 - To evaluate the Shellshock vulnerability, I chose a manual exploitation method using Burp Suite. The exploit involved executing the command `script () { :; }; echo; echo; /bin/bash -c 'cat /etc/passwd'`. Following this, I then proceeded to obtain a reverse shell using netcat.   
 - I achieved a reverse shell by substituting the user agent's content with the necessary script and establishing a netcat listener on port 1234\.
 
-![][image2]
+
+![flag1][image2](/linux-assets/img2.png)
 
 - I obtained FLAG1\_f4a890b167fd429980ec115a63c2a347 successfully.
 
@@ -50,24 +51,27 @@ Flag 3:
 
 - Before finding the flag, I carried out an host discovery scan and also found out that port 22 which is the ssh was opened and it was running the libssh 0.8.3 versioimg3  
      
-  ![][image3]  
+![ssh by_pass][image3](/linux-assets/img3.png)
     
 - Successfully obtained a shell session by leveraging the Metasploit framework and the `libssh_auth_bypass` module to bypass the SSH login.
 
 
-![][image4]
+![shell][image4](/linux-assets/img4.png)
 
 -  Flag 3  was found in the /home/user directory FLAG3\_ce2bcc1350c349c181e57308c9ce78f  
-  ![][image5]
 
+![flag3][image5](/linux-assets/img5.png)
 
 Flag 4 
 
 - Flag 4 required privilege escalation to achieve root access. I identified an SUID vulnerability in the `/home/user/welcome` executable. My investigation revealed that the `welcome` file calls a file named `greetings`. I exploited this by deleting the original `greetings` file and replacing it with a new file of the same name, containing the script `cp /bin/bash`.  
-  ![][image6]  
+
+![suid][image6](/linux-assets/img6.png) 
     
-  ![][image7]  
+ 
+![root_access][image7](/linux-assets/img7.png)
     
-  ![][image8]  
+
+![flag4][image8](/linux-assets/img8.png)
     
 - Flag 4 was obtained as FLAG4\_67e8fffec61a481498fe9dbc54a8d79a
