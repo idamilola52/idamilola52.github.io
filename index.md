@@ -18,5 +18,5 @@ eJPT Solution: System-Host Based Attacks CTF 1
 eJPT Solution: System-Host Based Attacks CTF 2
 ([View Write-up]({{ site.baseurl }}/System-Host-Based-Attacks-CTF2))
 
-Host & Network Penetration Testing: System-Host Based Attacks CTF 1
+eJPT Solution: Host & Network Penetration Testing: System-Host Based Attacks CTF 1
 ([View Write-up]({{ site.baseurl }}/Host-&-Network-Penetration-Testing:System-Host-Based-Attacks-CTF-1))
